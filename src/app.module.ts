@@ -6,6 +6,7 @@ import { User } from './common/entity/users/user.entity';
 import { GroceryItem } from './common/entity/grocery/grocery-item.entity';
 import { Order } from './common/entity/orders/order.entity';
 import { OrderItem } from './common/entity/orders/order-item.entity';
+import { OrderModule } from './order/order.module';
 import { GroceryModule } from './grocery/grocery.module';
 ;
 
@@ -28,7 +29,8 @@ import { GroceryModule } from './grocery/grocery.module';
       }),
     }),
     AuthModule,
-    GroceryModule
+    GroceryModule,
+    OrderModule,
   ],
 })
 export class AppModule { }

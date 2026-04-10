@@ -8,7 +8,7 @@ export class GroceryService {
   constructor(
     @InjectModel(GroceryItem)
     private groceryModel: typeof GroceryItem,
-  ) {}
+  ) { }
 
   async create(dto: CreateGroceryDto): Promise<GroceryItem> {
     const existingItem = await this.groceryModel.findOne({
@@ -44,13 +44,15 @@ export class GroceryService {
   }
 
   async findOne(id: string): Promise<GroceryItem> {
-    const grocery = await this.groceryModel.findByPk(id);
-    
-    if (!grocery) {
+    try {
+      const grocery = await this.groceryModel.findByPk(id);
+      if (!grocery) {
+        throw new NotFoundException(`Grocery item with ID ${id} not found`);
+      }
+      return grocery;
+    } catch (error) {
       throw new NotFoundException(`Grocery item with ID ${id} not found`);
     }
-    
-    return grocery;
   }
 
   async update(id: string, dto: UpdateGroceryDto): Promise<GroceryItem> {
@@ -60,7 +62,7 @@ export class GroceryService {
       const existingItem = await this.groceryModel.findOne({
         where: { name: dto.name }
       });
-      
+
       if (existingItem) {
         throw new ConflictException(`Grocery item with name "${dto.name}" already exists`);
       }
@@ -82,26 +84,26 @@ export class GroceryService {
 
     const grocery = await this.findOne(id);
     await grocery.update({ inventory });
-    
+
     return grocery;
   }
 
   async remove(id: string): Promise<{ message: string }> {
     const grocery = await this.findOne(id);
     await grocery.destroy();
-    
+
     return { message: `Grocery item "${grocery.name}" deleted successfully` };
   }
 
   async checkAndUpdateStock(id: string, quantity: number): Promise<boolean> {
     const grocery = await this.findOne(id);
-    
+
     if (grocery.inventory < quantity) {
       throw new ConflictException(`Insufficient stock for ${grocery.name}. Available: ${grocery.inventory}`);
     }
-    
+
     await grocery.update({ inventory: grocery.inventory - quantity });
-    
+
     return true;
   }
 }
