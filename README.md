@@ -23,6 +23,10 @@ A robust NestJS-based REST API for managing grocery items and orders with role-b
     - [Start in development mode with hot reload](#start-in-development-mode-with-hot-reload)
     - [Using Docker (Recommended)](#using-docker-recommended)
     - [Add Docker Environment Variables Setup](#add-docker-environment-variables-setup)
+  - [🚀API endpoints](#api-endpoints)
+      - [Register \& Login](#register--login)
+  - [📝 API Usage Examples](#-api-usage-examples)
+    - [User Registration](#user-registration)
     - [User Login](#user-login)
     - [Grocery Endpoints](#grocery-endpoints)
     - [Admin: Add Grocery Item](#admin-add-grocery-item)
@@ -33,9 +37,6 @@ A robust NestJS-based REST API for managing grocery items and orders with role-b
     - [Token Format](#token-format)
   - [🧪 Testing](#-testing)
   - [🚀 Quick Start with Docker](#-quick-start-with-docker)
-- [Clone and setup](#clone-and-setup)
-- [Create environment file](#create-environment-file)
-- [Start all services](#start-all-services)
 
 ## ✨ Features
 
@@ -144,12 +145,13 @@ docker-compose up -d --build
 ```
 ### Add Docker Environment Variables Setup
 
-```markdown
+```bash
+markdown
 ### Docker Environment Setup
 
 Create `.env` file in project root:
 
-```env
+env
 # Database Configuration
 DB_HOST=postgres
 DB_PORT=5432
@@ -164,6 +166,7 @@ JWT_EXPIRES_IN=1d
 # Application Configuration
 NODE_ENV=production
 PORT=3000
+```
 
 ## 🚀API endpoints
 
@@ -200,6 +203,7 @@ Content-Type: application/json
 }
 ```
 **Response:**
+```bash
 {
   "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
   "user": {
@@ -208,6 +212,7 @@ Content-Type: application/json
     "role": "user"
   }
 }
+```
 
 ### Grocery Endpoints
 - POST	/api/grocery (Add new grocery item)	- Admin
@@ -229,12 +234,12 @@ Content-Type: application/json
   "name": "Basmati Rice",
   "price": 120,
   "inventory": 50
-}```
+}
+```
 
 **Response:**
 
 ```bash
-json
 {
   "id": "660e8400-e29b-41d4-a716-446655440001",
   "name": "Basmati Rice",
@@ -314,12 +319,12 @@ npm test
 ## 🚀 Quick Start with Docker
 
 ```bash
-# Clone and setup
+- Clone and setup
 git clone https://github.com/abmrifat1/question-pro-grocery.git
 cd question-pro-grocery
 
-# Create environment file
+- Create environment file
 cp .env.example .env
 
-# Start all services
+- Start all services
 docker-compose up -d
