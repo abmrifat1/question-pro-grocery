@@ -8,7 +8,6 @@ import { Order } from './common/entity/orders/order.entity';
 import { OrderItem } from './common/entity/orders/order-item.entity';
 import { OrderModule } from './order/order.module';
 import { GroceryModule } from './grocery/grocery.module';
-;
 
 @Module({
   imports: [
