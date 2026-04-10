@@ -4,7 +4,7 @@ import { PassportModule } from '@nestjs/passport';
 import { StringValue } from 'ms';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { User } from '../entity/users/user.entity';
+import { User } from '../common/entity/users/user.entity';
 import { AuthController } from './controllers/auth.controller';
 import { AuthService } from './services/auth.service';
 import { JwtStrategy } from './helpers/jwt.strategy';

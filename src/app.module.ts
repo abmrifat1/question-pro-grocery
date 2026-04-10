@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { User } from './entity/users/user.entity';
-import { GroceryItem } from './entity/grocery/grocery-item.entity';
-import { Order } from './entity/orders/order.entity';
-import { OrderItem } from './entity/orders/order-item.entity';
+import { User } from './common/entity/users/user.entity';
+import { GroceryItem } from './common/entity/grocery/grocery-item.entity';
+import { Order } from './common/entity/orders/order.entity';
+import { OrderItem } from './common/entity/orders/order-item.entity';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
