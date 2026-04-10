@@ -22,14 +22,20 @@ A robust NestJS-based REST API for managing grocery items and orders with role-b
   - [🚀 Running the Application](#-running-the-application)
     - [Start in development mode with hot reload](#start-in-development-mode-with-hot-reload)
     - [Using Docker (Recommended)](#using-docker-recommended)
-  - [🚀API endpoints](#api-endpoints)
-      - [Register \& Login](#register--login)
+    - [Add Docker Environment Variables Setup](#add-docker-environment-variables-setup)
+    - [User Login](#user-login)
     - [Grocery Endpoints](#grocery-endpoints)
+    - [Admin: Add Grocery Item](#admin-add-grocery-item)
     - [Order Endpoints](#order-endpoints)
+    - [User: Create Order](#user-create-order)
   - [🔐 Authentication](#-authentication)
     - [JWT Token Flow](#jwt-token-flow)
     - [Token Format](#token-format)
   - [🧪 Testing](#-testing)
+  - [🚀 Quick Start with Docker](#-quick-start-with-docker)
+- [Clone and setup](#clone-and-setup)
+- [Create environment file](#create-environment-file)
+- [Start all services](#start-all-services)
 
 ## ✨ Features
 
@@ -136,12 +142,72 @@ docker-compose down
 # Rebuild after changes
 docker-compose up -d --build
 ```
+### Add Docker Environment Variables Setup
+
+```markdown
+### Docker Environment Setup
+
+Create `.env` file in project root:
+
+```env
+# Database Configuration
+DB_HOST=postgres
+DB_PORT=5432
+DB_USERNAME=grocery_user
+DB_PASSWORD=grocery_pass
+DB_DATABASE=grocery_db
+
+# JWT Configuration
+JWT_SECRET=supersecretkeychangeinproduction
+JWT_EXPIRES_IN=1d
+
+# Application Configuration
+NODE_ENV=production
+PORT=3000
 
 ## 🚀API endpoints
 
 #### Register & Login
 - POST	/api/auth/register	(Register new user)
 - POST	/api/auth/login	(Login user)
+
+## 📝 API Usage Examples
+
+### User Registration
+
+**Request:**
+```bash
+POST /api/auth/register
+Content-Type: application/json
+
+{
+  "username": "john_doe",
+  "password": "securepassword123",
+  "role": "user"
+}
+```
+
+### User Login
+
+**Request:**
+```bash
+POST /api/auth/login
+Content-Type: application/json
+
+{
+  "username": "john_doe",
+  "password": "securepassword123"
+}
+```
+**Response:**
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "username": "john_doe",
+    "role": "user"
+  }
+}
 
 ### Grocery Endpoints
 - POST	/api/grocery (Add new grocery item)	- Admin
@@ -151,10 +217,79 @@ docker-compose up -d --build
 - DELETE	/api/grocery/:id	(Delete grocery item)	- Admin
 - PATCH	/api/grocery/:id/inventory	(Update inventory) - Admin
 
+### Admin: Add Grocery Item
+**Request:**
+
+```bash
+POST /api/grocery
+Authorization: Bearer <admin_token>
+Content-Type: application/json
+
+{
+  "name": "Basmati Rice",
+  "price": 120,
+  "inventory": 50
+}```
+
+**Response:**
+
+```bash
+json
+{
+  "id": "660e8400-e29b-41d4-a716-446655440001",
+  "name": "Basmati Rice",
+  "price": 120,
+  "inventory": 50,
+  "createdAt": "2026-04-10T12:00:00.000Z",
+  "updatedAt": "2026-04-10T12:00:00.000Z"
+}
+```
+
 ### Order Endpoints
 - POST	/api/orders	(Create new order) - User
 - GET	/api/orders	(Get user's orders) - User
 - GET	/api/orders/:id	(Get a user's order details) - User
+
+### User: Create Order
+**Request:**
+
+```bash
+POST /api/orders
+Authorization: Bearer <user_token>
+Content-Type: application/json
+
+
+{
+  "items": [
+    {
+      "groceryItemId": "660e8400-e29b-41d4-a716-446655440001",
+      "quantity": 2
+    }
+  ]
+}
+```
+**Response:**
+
+```bash
+json
+{
+  "id": "880e8400-e29b-41d4-a716-446655440003",
+  "userId": "550e8400-e29b-41d4-a716-446655440000",
+  "totalAmount": 240,
+  "items": [
+    {
+      "id": "990e8400-e29b-41d4-a716-446655440004",
+      "groceryItemId": "660e8400-e29b-41d4-a716-446655440001",
+      "name": "Basmati Rice",
+      "quantity": 2,
+      "price": 120,
+      "subtotal": 240
+    }
+  ],
+  "createdAt": "2026-04-10T12:10:00.000Z"
+}
+```
+
 
 ## 🔐 Authentication
 
@@ -175,3 +310,16 @@ Authorization: Bearer <your_jwt_token>
 # Unit tests
 npm test
 ```
+
+## 🚀 Quick Start with Docker
+
+```bash
+# Clone and setup
+git clone https://github.com/abmrifat1/question-pro-grocery.git
+cd question-pro-grocery
+
+# Create environment file
+cp .env.example .env
+
+# Start all services
+docker-compose up -d
