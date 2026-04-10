@@ -17,18 +17,18 @@ A robust NestJS-based REST API for managing grocery items and orders with role-b
     - [2. Install dependencies](#2-install-dependencies)
     - [3. Set up environment variables](#3-set-up-environment-variables)
     - [4. Create PostgreSQL database](#4-create-postgresql-database)
-- [Connect to PostgreSQL](#connect-to-postgresql)
-- [Create database and user](#create-database-and-user)
+    - [Connect to PostgreSQL](#connect-to-postgresql)
+    - [Create database and user](#create-database-and-user)
   - [🚀 Running the Application](#-running-the-application)
-- [Start in development mode with hot reload](#start-in-development-mode-with-hot-reload)
+    - [Start in development mode with hot reload](#start-in-development-mode-with-hot-reload)
     - [Using Docker (Recommended)](#using-docker-recommended)
-    - [API endpoints](#api-endpoints)
-- [register \& login](#register--login)
-- [Grocery Endpoints](#grocery-endpoints)
-- [Order Endpoints](#order-endpoints)
+  - [🚀API endpoints](#api-endpoints)
+      - [register \& login](#register--login)
+    - [Grocery Endpoints](#grocery-endpoints)
+    - [Order Endpoints](#order-endpoints)
   - [🔐 Authentication](#-authentication)
-- [JWT Token Flow](#jwt-token-flow)
-- [Token Format](#token-format)
+    - [JWT Token Flow](#jwt-token-flow)
+    - [Token Format](#token-format)
   - [🧪 Testing](#-testing)
 
 ## ✨ Features
@@ -93,12 +93,12 @@ npm install
 
 ### 4. Create PostgreSQL database
 
-# Connect to PostgreSQL
+### Connect to PostgreSQL
 ```bash
 sudo -u postgres psql
 ```
 
-# Create database and user
+### Create database and user
 ```bsh
 CREATE DATABASE grocery_db;
 CREATE USER grocery_user WITH ENCRYPTED PASSWORD 'grocery_pass';
@@ -108,7 +108,7 @@ GRANT ALL PRIVILEGES ON DATABASE grocery_db TO grocery_user;
 
 ## 🚀 Running the Application
 
-# Start in development mode with hot reload
+### Start in development mode with hot reload
 ```bsh
 npm run start:dev
 
@@ -137,13 +137,13 @@ docker-compose down
 docker-compose up -d --build
 ```
 
-### API endpoints
+## 🚀API endpoints
 
-# register & login
+#### register & login
 - POST	/api/auth/register	(Register new user)
 - POST	/api/auth/login	(Login user)
 
-# Grocery Endpoints
+### Grocery Endpoints
 - POST	/api/grocery (Add new grocery item)	- Admin
 - GET	/api/grocery (Get all grocery items) - Admin/User
 - GET	/api/grocery/available	(Get in-stock items)	- Admin/User
@@ -151,20 +151,20 @@ docker-compose up -d --build
 - DELETE	/api/grocery/:id	(Delete grocery item)	- Admin
 - PATCH	/api/grocery/:id/inventory	(Update inventory) - Admin
 
-# Order Endpoints
+### Order Endpoints
 - POST	/api/orders	(Create new order) - User
 - GET	/api/orders	(Get user's orders) - User
 - GET	/api/orders/:id	(Get a user's order details) - User
 
 ## 🔐 Authentication
 
-# JWT Token Flow
+### JWT Token Flow
 - Register - Create a new user account
 - Login - Receive JWT access token
 - Authorize - Include token in subsequent requests
 - Access - Role-based access to protected routes
 
-# Token Format
+### Token Format
 
 ```bash
 Authorization: Bearer <your_jwt_token>
