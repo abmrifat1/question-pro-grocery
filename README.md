@@ -23,7 +23,7 @@ A robust NestJS-based REST API for managing grocery items and orders with role-b
     - [Start in development mode with hot reload](#start-in-development-mode-with-hot-reload)
     - [Using Docker (Recommended)](#using-docker-recommended)
   - [🚀API endpoints](#api-endpoints)
-      - [register \& login](#register--login)
+      - [Register \& Login](#register--login)
     - [Grocery Endpoints](#grocery-endpoints)
     - [Order Endpoints](#order-endpoints)
   - [🔐 Authentication](#-authentication)
@@ -139,7 +139,7 @@ docker-compose up -d --build
 
 ## 🚀API endpoints
 
-#### register & login
+#### Register & Login
 - POST	/api/auth/register	(Register new user)
 - POST	/api/auth/login	(Login user)
 
